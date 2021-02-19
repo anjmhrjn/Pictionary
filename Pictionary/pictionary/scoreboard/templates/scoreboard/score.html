@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Pictionary</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container" style="width: 70%;">
+
+        <form>
+            <div class="form-row text-center">
+                <div class="col">
+
+                    <label>Team1:</label>
+                    <select name="team1">
+                        {% for team in teams %}
+                        <option value="{{team}}">{{team.team_name}}</option>
+                        {% endfor %}
+
+                    </select>
+                </div>
+                <div class="col">
+                    <label >
+                        <strong>VS</strong>
+                    </label>
+
+                </div>
+                <div class="col">
+                    <label>Team2:</label>
+                    <select name="team2">
+                        {% for team in teams %}
+                        <option value="{{team}}">{{team.team_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col">
+                    <button type="submit">Start</button>
+                </div>
+            </div>
+        </form>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="col">
+                    <label>Time:</label>
+                    <!-- <label>Time taken by {{team_value}}:</label>
+
+                    <input type="text" name="game_team" hidden value="{{team_value}}" id="{{forloop.counter}}"> -->
+                    <input type="number" name="time">
+                </div>
+                <div class="col">
+
+                    {% if teams|length > 6 %}
+                        <input type="text" hidden name="round" value="RoundOne">
+                        <label>Round 1</label>
+                    {% elif teams|length > 3 %}
+                        <input type="text" hidden name="round" value="RoundTwo">
+                        <label>Round 2</label>
+                    {% else %}
+                        <input type="text" hidden name="round" value="RoundThree">
+                        <label>Round 3</label>
+                    {% endif %}
+
+                </div>
+                <div class="col">
+                    <label>Winner:</label>
+                    <select name="winner">
+
+                    {% for team_value in two_teams %}
+                        <option value="{{team_value}}">{{team_value}}</option>
+                    {% endfor %}
+                    </select>
+
+                    {% for team_value in two_teams %}
+                        <input type="text" name="game_team" hidden value="{{team_value}}" id="{{forloop.counter}}">
+                    {% endfor %}
+
+
+                </div>
+
+
+                <button type="submit">Submit</button>
+            </div>
+
+        </form>
+    </div>
+
+        <!--
+        <form>
+            <div>
+                <div style="float:left;">
+                    <label>Team1:</label>
+                    <select>
+                        <option>Sagarmatha</option>
+                        <option>Kanchanjunga</option>
+                        <option>Annapurna</option>
+                    </select>
+                </div>
+
+                <strong>VS</strong>
+
+                <div style="float:left;">
+                    <label>Team2:</label>
+                    <select>
+                        <option>Sagarmatha</option>
+                        <option>Kanchanjunga</option>
+                        <option>Annapurna</option>
+                    </select>
+                </div>
+                <button>Show Details</button>
+            </div>
+
+            <div>
+                <div style="float:left;">
+                    for show details &nbsp;&nbsp;&nbsp;
+                </div>
+                <div>
+                    for submitting details
+                </div>
+            </div>
+
+        </form> -->
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+    <script>
+        var val1 = document.getElementById('1').value;
+        var val2 = document.getElementById('2').value;
+        console.log(val1);
+        if(val1 != null) {
+
+            document.getElementsByName("team1")[0].value = val1;
+        }
+        if(val2 != null) {
+
+            document.getElementsByName("team2")[0].value = val2;
+        }
+
+    </script>
+</body>
+</html>
